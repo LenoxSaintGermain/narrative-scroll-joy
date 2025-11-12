@@ -1,8 +1,22 @@
 import { useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import heroPhone from "@/assets/hero-pro-phone.jpg";
 
-const Hero = () => {
+interface HeroContent {
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  ctas: {
+    primary: { text: string; href: string };
+    secondary: { text: string; href: string };
+  };
+  media: string;
+}
+
+interface HeroProps {
+  content: HeroContent;
+}
+
+const Hero = ({ content }: HeroProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -26,22 +40,26 @@ const Hero = () => {
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(600px_circle_at_var(--pointer-x,50%)_var(--pointer-y,50%),hsl(var(--ring)/0.18),transparent_60%)]" />
 
-      <p className="mb-3 text-sm text-muted-foreground animate-fade-in">Introducing</p>
+      <p className="mb-3 text-sm text-muted-foreground animate-fade-in">{content.eyebrow}</p>
       <h1 className="mx-auto max-w-3xl bg-clip-text text-5xl font-extrabold tracking-tight md:text-7xl">
-        <span className="text-transparent bg-[var(--gradient-primary)] bg-clip-text">Pro Phone</span>
+        <span className="text-transparent bg-[var(--gradient-primary)] bg-clip-text">{content.title}</span>
       </h1>
       <p className="mt-4 max-w-xl text-balance text-muted-foreground md:text-lg">
-        A cinematic, narrative scrolling experience inspired by the best product pages.
+        {content.subtitle}
       </p>
       <div className="mt-8 flex items-center gap-4">
-        <Button variant="hero" size="xl">Buy</Button>
-        <Button variant="outline" size="lg" className="rounded-full">Learn more</Button>
+        <Button variant="hero" size="xl" asChild>
+          <a href={content.ctas.primary.href}>{content.ctas.primary.text}</a>
+        </Button>
+        <Button variant="outline" size="lg" className="rounded-full" asChild>
+          <a href={content.ctas.secondary.href}>{content.ctas.secondary.text}</a>
+        </Button>
       </div>
 
       <figure className="relative mt-12 w-full max-w-5xl md:mt-20">
         <img
-          src={heroPhone}
-          alt="Pro Phone floating hero shot"
+          src={content.media}
+          alt={`${content.title} hero visual`}
           loading="eager"
           className="mx-auto h-auto w-full rounded-lg object-cover shadow-[var(--shadow-elegant)] animate-scale-in"
         />
