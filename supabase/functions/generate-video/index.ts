@@ -13,7 +13,7 @@ serve(async (req) => {
   }
 
   try {
-    const { prompt, aspectRatio = '16:9', duration = 5, model = 'veo-3.1-generate-preview' } = await req.json();
+    const { prompt, aspectRatio = '16:9', duration = 6, model = 'veo-3.1-generate-preview' } = await req.json();
     
     if (!prompt) {
       return new Response(
