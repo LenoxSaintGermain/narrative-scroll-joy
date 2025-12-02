@@ -1773,9 +1773,11 @@ export type Database = {
       }
       narratives: {
         Row: {
+          ai_cover_prompt: string | null
           created_at: string | null
           description: string | null
           framework_id: string | null
+          genre: string | null
           id: string
           is_public: boolean | null
           status: Database["public"]["Enums"]["story_status"] | null
@@ -1783,11 +1785,14 @@ export type Database = {
           title: string
           updated_at: string | null
           user_id: string
+          view_count: number | null
         }
         Insert: {
+          ai_cover_prompt?: string | null
           created_at?: string | null
           description?: string | null
           framework_id?: string | null
+          genre?: string | null
           id?: string
           is_public?: boolean | null
           status?: Database["public"]["Enums"]["story_status"] | null
@@ -1795,11 +1800,14 @@ export type Database = {
           title: string
           updated_at?: string | null
           user_id: string
+          view_count?: number | null
         }
         Update: {
+          ai_cover_prompt?: string | null
           created_at?: string | null
           description?: string | null
           framework_id?: string | null
+          genre?: string | null
           id?: string
           is_public?: boolean | null
           status?: Database["public"]["Enums"]["story_status"] | null
@@ -1807,6 +1815,7 @@ export type Database = {
           title?: string
           updated_at?: string | null
           user_id?: string
+          view_count?: number | null
         }
         Relationships: [
           {
@@ -2149,6 +2158,38 @@ export type Database = {
             columns: ["profile_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      story_engagements: {
+        Row: {
+          created_at: string
+          engagement_type: string
+          id: string
+          narrative_id: string
+          session_id: string
+        }
+        Insert: {
+          created_at?: string
+          engagement_type: string
+          id?: string
+          narrative_id: string
+          session_id: string
+        }
+        Update: {
+          created_at?: string
+          engagement_type?: string
+          id?: string
+          narrative_id?: string
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "story_engagements_narrative_id_fkey"
+            columns: ["narrative_id"]
+            isOneToOne: false
+            referencedRelation: "narratives"
             referencedColumns: ["id"]
           },
         ]
