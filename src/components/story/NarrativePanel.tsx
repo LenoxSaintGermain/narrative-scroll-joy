@@ -28,7 +28,7 @@ export function NarrativePanel({ content, onChange, frameId }: NarrativePanelPro
 
       if (error) throw error;
 
-      onChange(data.generatedText);
+      onChange(data.text);
       toast({ title: "AI generated narrative!" });
     } catch (error: any) {
       toast({

@@ -5,12 +5,17 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { FrameEditor } from "@/components/story/FrameEditor";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 interface Narrative {
   id: string;
   title: string;
   description: string | null;
   framework_id: string | null;
+  status: 'draft' | 'published' | 'archived';
+  is_public: boolean;
 }
 
 interface Chapter {
@@ -52,7 +57,7 @@ export default function StoryDetail() {
         .single();
 
       if (narrativeError) throw narrativeError;
-      setNarrative(narrativeData);
+      setNarrative(narrativeData as Narrative);
 
       const { data: chaptersData, error: chaptersError } = await supabase
         .from('chapters')
@@ -142,6 +147,52 @@ export default function StoryDetail() {
     }
   };
 
+  const handleStatusChange = async (newStatus: string) => {
+    if (!narrative) return;
+    
+    const typedStatus = newStatus as 'draft' | 'published' | 'archived';
+    
+    try {
+      const { error } = await supabase
+        .from('narratives')
+        .update({ status: typedStatus })
+        .eq('id', narrative.id);
+
+      if (error) throw error;
+
+      setNarrative({ ...narrative, status: typedStatus });
+      toast({ title: "Status updated successfully" });
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Error updating status",
+        description: error.message,
+      });
+    }
+  };
+
+  const handlePublicToggle = async (isPublic: boolean) => {
+    if (!narrative) return;
+    
+    try {
+      const { error } = await supabase
+        .from('narratives')
+        .update({ is_public: isPublic })
+        .eq('id', narrative.id);
+
+      if (error) throw error;
+
+      setNarrative({ ...narrative, is_public: isPublic });
+      toast({ title: isPublic ? "Story is now public" : "Story is now private" });
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Error updating visibility",
+        description: error.message,
+      });
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -161,17 +212,44 @@ export default function StoryDetail() {
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur border-b">
-        <div className="container py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm" onClick={() => navigate('/stories')}>
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Button>
-            <div>
-              <h1 className="text-2xl font-bold">{narrative.title}</h1>
-              {narrative.description && (
-                <p className="text-sm text-muted-foreground">{narrative.description}</p>
-              )}
+        <div className="container py-4">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-4">
+              <Button variant="ghost" size="sm" onClick={() => navigate('/stories')}>
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back
+              </Button>
+              <div>
+                <h1 className="text-2xl font-bold">{narrative.title}</h1>
+                {narrative.description && (
+                  <p className="text-sm text-muted-foreground">{narrative.description}</p>
+                )}
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2">
+              <Label htmlFor="status" className="text-sm">Status:</Label>
+              <Select value={narrative.status} onValueChange={handleStatusChange}>
+                <SelectTrigger id="status" className="w-32">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="draft">Draft</SelectItem>
+                  <SelectItem value="published">Published</SelectItem>
+                  <SelectItem value="archived">Archived</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="flex items-center gap-2">
+              <Switch 
+                id="public" 
+                checked={narrative.is_public} 
+                onCheckedChange={handlePublicToggle}
+              />
+              <Label htmlFor="public" className="text-sm">Make Public</Label>
             </div>
           </div>
         </div>
