@@ -96,6 +96,7 @@ serve(async (req) => {
           throw new Error(`Video generation failed: ${JSON.stringify(statusData.error)}`);
         }
         
+        console.log('Raw response data:', JSON.stringify(statusData, null, 2));
         videoData = statusData.response;
         console.log('Video generation complete!');
         break;
@@ -104,13 +105,25 @@ serve(async (req) => {
       console.log(`Polling attempt ${attempt + 1}/${maxAttempts}...`);
     }
 
-    if (!videoData || !videoData.video) {
+    if (!videoData) {
       throw new Error('Video generation timed out or failed to return video data');
     }
 
-    // Get base64 video data
-    const videoBase64 = videoData.video.videoData;
+    console.log('Video data structure:', Object.keys(videoData));
+
+    // Get base64 video data - handle different possible response structures
+    let videoBase64: string | undefined;
+    
+    if (videoData.video?.videoData) {
+      videoBase64 = videoData.video.videoData;
+    } else if (videoData.predictions && videoData.predictions[0]?.videoData) {
+      videoBase64 = videoData.predictions[0].videoData;
+    } else if (videoData.videoData) {
+      videoBase64 = videoData.videoData;
+    }
+    
     if (!videoBase64) {
+      console.error('Could not find video data in response:', JSON.stringify(videoData, null, 2));
       throw new Error('No video data returned from generation');
     }
 
