@@ -22,10 +22,10 @@ serve(async (req) => {
       );
     }
 
-    // Validate duration is within API bounds (4-8 seconds)
-    if (duration < 4 || duration > 8) {
+    // Validate duration is one of the allowed values for Veo 3 models (4, 6, or 8 seconds)
+    if (![4, 6, 8].includes(duration)) {
       return new Response(
-        JSON.stringify({ error: 'Duration must be between 4 and 8 seconds' }),
+        JSON.stringify({ error: 'Duration must be 4, 6, or 8 seconds for Veo 3 models' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
