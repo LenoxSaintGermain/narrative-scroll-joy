@@ -136,5 +136,37 @@ All colors MUST be HSL.
 
   .hover-scale { transition: transform .2s ease; }
   .hover-scale:hover { transform: scale(1.05); }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .animate-confetti {
+    animation: confetti 0.6s ease-out forwards;
+  }
+}
+
+@keyframes confetti {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
 }
 
