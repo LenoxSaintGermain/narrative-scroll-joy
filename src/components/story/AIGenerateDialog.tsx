@@ -29,7 +29,7 @@ export function AIGenerateDialog({
   const [prompt, setPrompt] = useState("");
   const [aspectRatio, setAspectRatio] = useState("16:9");
   const [mediaType, setMediaType] = useState<'image' | 'video'>('image');
-  const [duration, setDuration] = useState(5);
+  const [duration, setDuration] = useState(6);
   const [videoModel, setVideoModel] = useState("veo-3.1-generate-preview");
 
   const handleGenerate = () => {
@@ -108,17 +108,17 @@ export function AIGenerateDialog({
           {mediaType === 'video' && (
             <>
               <div className="space-y-2">
-                <Label htmlFor="duration">Duration: {duration} seconds</Label>
-                <input
-                  id="duration"
-                  type="range"
-                  min="4"
-                  max="8"
-                  step="1"
-                  value={duration}
-                  onChange={(e) => setDuration(parseInt(e.target.value))}
-                  className="w-full"
-                />
+                <Label htmlFor="duration">Duration</Label>
+                <Select value={duration.toString()} onValueChange={(v) => setDuration(parseInt(v))}>
+                  <SelectTrigger id="duration">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="4">4 seconds</SelectItem>
+                    <SelectItem value="6">6 seconds</SelectItem>
+                    <SelectItem value="8">8 seconds</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="space-y-2">
