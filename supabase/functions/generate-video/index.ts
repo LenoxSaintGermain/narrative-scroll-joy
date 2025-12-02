@@ -39,13 +39,16 @@ serve(async (req) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          prompt: {
-            text: prompt
-          },
-          videoConfig: {
+          instances: [
+            {
+              prompt: prompt
+            }
+          ],
+          parameters: {
             aspectRatio: aspectRatio,
             durationSeconds: duration,
-            resolution: '720p'
+            resolution: '720p',
+            sampleCount: 1
           }
         }),
       }
