@@ -302,6 +302,7 @@ export type Database = {
           company_name: string | null
           contact_email: string | null
           contact_name: string | null
+          contact_phone: string | null
           contact_title: string | null
           created_at: string | null
           created_by: string | null
@@ -311,6 +312,7 @@ export type Database = {
           gemini_brief: Json | null
           google_doc_url: string | null
           industry: string | null
+          linkedin_url: string | null
           needs_manual_research: boolean | null
           notes: string | null
           outcome: string | null
@@ -327,6 +329,7 @@ export type Database = {
           status: string | null
           updated_at: string | null
           version: number | null
+          website_url: string | null
           what_to_expect: string | null
         }
         Insert: {
@@ -335,6 +338,7 @@ export type Database = {
           company_name?: string | null
           contact_email?: string | null
           contact_name?: string | null
+          contact_phone?: string | null
           contact_title?: string | null
           created_at?: string | null
           created_by?: string | null
@@ -344,6 +348,7 @@ export type Database = {
           gemini_brief?: Json | null
           google_doc_url?: string | null
           industry?: string | null
+          linkedin_url?: string | null
           needs_manual_research?: boolean | null
           notes?: string | null
           outcome?: string | null
@@ -360,6 +365,7 @@ export type Database = {
           status?: string | null
           updated_at?: string | null
           version?: number | null
+          website_url?: string | null
           what_to_expect?: string | null
         }
         Update: {
@@ -368,6 +374,7 @@ export type Database = {
           company_name?: string | null
           contact_email?: string | null
           contact_name?: string | null
+          contact_phone?: string | null
           contact_title?: string | null
           created_at?: string | null
           created_by?: string | null
@@ -377,6 +384,7 @@ export type Database = {
           gemini_brief?: Json | null
           google_doc_url?: string | null
           industry?: string | null
+          linkedin_url?: string | null
           needs_manual_research?: boolean | null
           notes?: string | null
           outcome?: string | null
@@ -393,6 +401,7 @@ export type Database = {
           status?: string | null
           updated_at?: string | null
           version?: number | null
+          website_url?: string | null
           what_to_expect?: string | null
         }
         Relationships: [
