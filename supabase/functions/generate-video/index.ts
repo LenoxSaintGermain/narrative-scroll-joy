@@ -119,14 +119,12 @@ serve(async (req) => {
       throw new Error('No video URI returned from generation');
     }
 
-    console.log('Downloading video from URI:', videoUri);
+    // Append API key as query parameter (URL already has ?alt=media, so use &)
+    const downloadUrl = `${videoUri}&key=${GEMINI_API_KEY}`;
+    console.log('Downloading video with API key authentication');
 
     // Download the video from the URI
-    const downloadResponse = await fetch(videoUri, {
-      headers: {
-        'Authorization': `Bearer ${GEMINI_API_KEY}`,
-      },
-    });
+    const downloadResponse = await fetch(downloadUrl);
 
     if (!downloadResponse.ok) {
       const errorText = await downloadResponse.text();
