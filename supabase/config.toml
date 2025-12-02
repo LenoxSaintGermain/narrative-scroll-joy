@@ -1,1 +1,10 @@
 project_id = "fzmyesdhiskuytgkaggi"
+
+[functions.generate-text]
+verify_jwt = true
+
+[functions.generate-image]
+verify_jwt = true
+
+[functions.ai-story-assist]
+verify_jwt = true

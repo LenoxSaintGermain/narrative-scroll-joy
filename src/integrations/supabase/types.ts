@@ -47,6 +47,50 @@ export type Database = {
         }
         Relationships: []
       }
+      agent_inbox: {
+        Row: {
+          content: string
+          created_at: string
+          error_message: string | null
+          id: string
+          metadata: Json | null
+          processed_at: string | null
+          processed_case_study_id: string | null
+          source: string | null
+          status: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          metadata?: Json | null
+          processed_at?: string | null
+          processed_case_study_id?: string | null
+          source?: string | null
+          status?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          metadata?: Json | null
+          processed_at?: string | null
+          processed_case_study_id?: string | null
+          source?: string | null
+          status?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_inbox_processed_case_study_id_fkey"
+            columns: ["processed_case_study_id"]
+            isOneToOne: false
+            referencedRelation: "case_studies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       ai_conversations: {
         Row: {
           action_items: Json | null
@@ -221,6 +265,146 @@ export type Database = {
           },
         ]
       }
+      campground_job_queue: {
+        Row: {
+          created_at: string | null
+          error: string | null
+          id: string
+          payload: Json
+          processed_at: string | null
+          status: string
+          type: string
+        }
+        Insert: {
+          created_at?: string | null
+          error?: string | null
+          id?: string
+          payload: Json
+          processed_at?: string | null
+          status?: string
+          type: string
+        }
+        Update: {
+          created_at?: string | null
+          error?: string | null
+          id?: string
+          payload?: Json
+          processed_at?: string | null
+          status?: string
+          type?: string
+        }
+        Relationships: []
+      }
+      campground_prospects: {
+        Row: {
+          calendly_event_uri: string | null
+          call_scheduled_time: string | null
+          company_name: string | null
+          contact_email: string | null
+          contact_name: string | null
+          contact_title: string | null
+          created_at: string | null
+          created_by: string | null
+          dossier_confidence: number | null
+          dossier_doc_id: string | null
+          employee_count: number | null
+          gemini_brief: Json | null
+          google_doc_url: string | null
+          industry: string | null
+          needs_manual_research: boolean | null
+          notes: string | null
+          outcome: string | null
+          outcome_notes: string | null
+          pre_call_email_content: string | null
+          pre_call_email_opened: boolean | null
+          pre_call_email_sent: boolean | null
+          pre_call_email_sent_at: string | null
+          projection_data: Json
+          prospect_id: string
+          selected_case_study_id: string | null
+          source: string | null
+          stage: string
+          status: string | null
+          updated_at: string | null
+          version: number | null
+          what_to_expect: string | null
+        }
+        Insert: {
+          calendly_event_uri?: string | null
+          call_scheduled_time?: string | null
+          company_name?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_title?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          dossier_confidence?: number | null
+          dossier_doc_id?: string | null
+          employee_count?: number | null
+          gemini_brief?: Json | null
+          google_doc_url?: string | null
+          industry?: string | null
+          needs_manual_research?: boolean | null
+          notes?: string | null
+          outcome?: string | null
+          outcome_notes?: string | null
+          pre_call_email_content?: string | null
+          pre_call_email_opened?: boolean | null
+          pre_call_email_sent?: boolean | null
+          pre_call_email_sent_at?: string | null
+          projection_data: Json
+          prospect_id?: string
+          selected_case_study_id?: string | null
+          source?: string | null
+          stage?: string
+          status?: string | null
+          updated_at?: string | null
+          version?: number | null
+          what_to_expect?: string | null
+        }
+        Update: {
+          calendly_event_uri?: string | null
+          call_scheduled_time?: string | null
+          company_name?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_title?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          dossier_confidence?: number | null
+          dossier_doc_id?: string | null
+          employee_count?: number | null
+          gemini_brief?: Json | null
+          google_doc_url?: string | null
+          industry?: string | null
+          needs_manual_research?: boolean | null
+          notes?: string | null
+          outcome?: string | null
+          outcome_notes?: string | null
+          pre_call_email_content?: string | null
+          pre_call_email_opened?: boolean | null
+          pre_call_email_sent?: boolean | null
+          pre_call_email_sent_at?: string | null
+          projection_data?: Json
+          prospect_id?: string
+          selected_case_study_id?: string | null
+          source?: string | null
+          stage?: string
+          status?: string | null
+          updated_at?: string | null
+          version?: number | null
+          what_to_expect?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campground_prospects_selected_case_study_id_fkey"
+            columns: ["selected_case_study_id"]
+            isOneToOne: false
+            referencedRelation: "case_study_detailed"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       career_goals: {
         Row: {
           ai_recommendations: Json | null
@@ -328,6 +512,7 @@ export type Database = {
           raw_idea: string
           social_posts_data: Json
           status: string
+          type: string | null
           updated_at: string | null
           visual_concepts_data: Json
         }
@@ -343,6 +528,7 @@ export type Database = {
           raw_idea: string
           social_posts_data?: Json
           status?: string
+          type?: string | null
           updated_at?: string | null
           visual_concepts_data?: Json
         }
@@ -358,6 +544,7 @@ export type Database = {
           raw_idea?: string
           social_posts_data?: Json
           status?: string
+          type?: string | null
           updated_at?: string | null
           visual_concepts_data?: Json
         }
@@ -560,6 +747,44 @@ export type Database = {
           },
         ]
       }
+      chapters: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          narrative_id: string
+          order_index: number
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          narrative_id: string
+          order_index?: number
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          narrative_id?: string
+          order_index?: number
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chapters_narrative_id_fkey"
+            columns: ["narrative_id"]
+            isOneToOne: false
+            referencedRelation: "narratives"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       chat_messages: {
         Row: {
           created_at: string | null
@@ -708,6 +933,33 @@ export type Database = {
           viewport_height?: number | null
           viewport_width?: number | null
           visitor_id?: string
+        }
+        Relationships: []
+      }
+      daily_career_insights: {
+        Row: {
+          content: string
+          created_at: string | null
+          date: string | null
+          id: string
+          is_favorite: boolean | null
+          profile_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          date?: string | null
+          id?: string
+          is_favorite?: boolean | null
+          profile_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          date?: string | null
+          id?: string
+          is_favorite?: boolean | null
+          profile_id?: string
         }
         Relationships: []
       }
@@ -894,6 +1146,89 @@ export type Database = {
           usage_count?: number | null
         }
         Relationships: []
+      }
+      frames: {
+        Row: {
+          ai_prompt_history: Json | null
+          beat_id: string | null
+          chapter_id: string
+          created_at: string | null
+          id: string
+          narrative_content: string | null
+          order_index: number
+          updated_at: string | null
+        }
+        Insert: {
+          ai_prompt_history?: Json | null
+          beat_id?: string | null
+          chapter_id: string
+          created_at?: string | null
+          id?: string
+          narrative_content?: string | null
+          order_index?: number
+          updated_at?: string | null
+        }
+        Update: {
+          ai_prompt_history?: Json | null
+          beat_id?: string | null
+          chapter_id?: string
+          created_at?: string | null
+          id?: string
+          narrative_content?: string | null
+          order_index?: number
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "frames_beat_id_fkey"
+            columns: ["beat_id"]
+            isOneToOne: false
+            referencedRelation: "framework_beats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "frames_chapter_id_fkey"
+            columns: ["chapter_id"]
+            isOneToOne: false
+            referencedRelation: "chapters"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      framework_beats: {
+        Row: {
+          beat_name: string
+          beat_number: number
+          created_at: string | null
+          framework_id: string
+          guidance_text: string | null
+          id: string
+        }
+        Insert: {
+          beat_name: string
+          beat_number: number
+          created_at?: string | null
+          framework_id: string
+          guidance_text?: string | null
+          id?: string
+        }
+        Update: {
+          beat_name?: string
+          beat_number?: number
+          created_at?: string | null
+          framework_id?: string
+          guidance_text?: string | null
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "framework_beats_framework_id_fkey"
+            columns: ["framework_id"]
+            isOneToOne: false
+            referencedRelation: "story_frameworks"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       hero_generation_queue: {
         Row: {
@@ -1332,6 +1667,65 @@ export type Database = {
         }
         Relationships: []
       }
+      media_assets: {
+        Row: {
+          created_at: string | null
+          file_size: number | null
+          frame_id: string
+          generation_model: string | null
+          generation_prompt: string | null
+          generation_status:
+            | Database["public"]["Enums"]["generation_status"]
+            | null
+          height: number | null
+          id: string
+          media_type: Database["public"]["Enums"]["media_type"]
+          media_url: string
+          thumbnail_url: string | null
+          width: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          file_size?: number | null
+          frame_id: string
+          generation_model?: string | null
+          generation_prompt?: string | null
+          generation_status?:
+            | Database["public"]["Enums"]["generation_status"]
+            | null
+          height?: number | null
+          id?: string
+          media_type?: Database["public"]["Enums"]["media_type"]
+          media_url: string
+          thumbnail_url?: string | null
+          width?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          file_size?: number | null
+          frame_id?: string
+          generation_model?: string | null
+          generation_prompt?: string | null
+          generation_status?:
+            | Database["public"]["Enums"]["generation_status"]
+            | null
+          height?: number | null
+          id?: string
+          media_type?: Database["public"]["Enums"]["media_type"]
+          media_url?: string
+          thumbnail_url?: string | null
+          width?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "media_assets_frame_id_fkey"
+            columns: ["frame_id"]
+            isOneToOne: false
+            referencedRelation: "frames"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       methodology_framework: {
         Row: {
           created_at: string | null
@@ -1367,6 +1761,53 @@ export type Database = {
           visual_metaphor?: string | null
         }
         Relationships: []
+      }
+      narratives: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          framework_id: string | null
+          id: string
+          is_public: boolean | null
+          status: Database["public"]["Enums"]["story_status"] | null
+          thumbnail_url: string | null
+          title: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          framework_id?: string | null
+          id?: string
+          is_public?: boolean | null
+          status?: Database["public"]["Enums"]["story_status"] | null
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          framework_id?: string | null
+          id?: string
+          is_public?: boolean | null
+          status?: Database["public"]["Enums"]["story_status"] | null
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "narratives_framework_id_fkey"
+            columns: ["framework_id"]
+            isOneToOne: false
+            referencedRelation: "story_frameworks"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       pattern_library: {
         Row: {
@@ -1407,6 +1848,63 @@ export type Database = {
           pattern_name?: string
           success_rate?: number | null
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      portfolio_projects: {
+        Row: {
+          client: string | null
+          created_at: string
+          description: string | null
+          id: string
+          image_prompt: string | null
+          image_url: string | null
+          impact: string[] | null
+          is_featured: boolean | null
+          name: string
+          relevant_for: string[] | null
+          sort_order: number | null
+          status: string | null
+          technologies: string[] | null
+          type: string
+          updated_at: string
+          year: string | null
+        }
+        Insert: {
+          client?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_prompt?: string | null
+          image_url?: string | null
+          impact?: string[] | null
+          is_featured?: boolean | null
+          name: string
+          relevant_for?: string[] | null
+          sort_order?: number | null
+          status?: string | null
+          technologies?: string[] | null
+          type: string
+          updated_at?: string
+          year?: string | null
+        }
+        Update: {
+          client?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_prompt?: string | null
+          image_url?: string | null
+          impact?: string[] | null
+          is_featured?: boolean | null
+          name?: string
+          relevant_for?: string[] | null
+          sort_order?: number | null
+          status?: string | null
+          technologies?: string[] | null
+          type?: string
+          updated_at?: string
+          year?: string | null
         }
         Relationships: []
       }
@@ -1646,6 +2144,36 @@ export type Database = {
           },
         ]
       }
+      story_frameworks: {
+        Row: {
+          beat_count: number
+          created_at: string | null
+          description: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+          updated_at: string | null
+        }
+        Insert: {
+          beat_count?: number
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+          updated_at?: string | null
+        }
+        Update: {
+          beat_count?: number
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       system_prompts: {
         Row: {
           created_at: string | null
@@ -1690,15 +2218,45 @@ export type Database = {
           },
         ]
       }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "creator" | "viewer"
+      generation_status: "pending" | "processing" | "completed" | "failed"
+      media_type: "image" | "video" | "audio"
+      story_status: "draft" | "published" | "archived"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1825,6 +2383,11 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "creator", "viewer"],
+      generation_status: ["pending", "processing", "completed", "failed"],
+      media_type: ["image", "video", "audio"],
+      story_status: ["draft", "published", "archived"],
+    },
   },
 } as const
