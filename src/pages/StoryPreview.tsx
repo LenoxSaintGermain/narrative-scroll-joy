@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { VideoPlayer } from "@/components/story/VideoPlayer";
+import { StoryFrame } from "@/components/story/StoryFrame";
 
 interface Frame {
   id: string;
@@ -101,8 +101,8 @@ export default function StoryPreview() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-lg">Loading story...</div>
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="text-lg text-muted-foreground">Loading story...</div>
       </div>
     );
   }
@@ -113,7 +113,10 @@ export default function StoryPreview() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b">
+      {/* Top fade gradient for cinematic effect */}
+      <div className="fixed top-0 left-0 right-0 h-32 bg-gradient-to-b from-background to-transparent z-40 pointer-events-none" />
+
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-sm border-b border-border/50">
         <div className="container py-4 flex items-center justify-between">
           <Button variant="ghost" size="sm" onClick={() => navigate('/')}>
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -128,40 +131,7 @@ export default function StoryPreview() {
 
       <main className="pt-20">
         {frames.map((frame, index) => (
-          <section
-            key={frame.id}
-            className="min-h-screen flex items-center sticky top-0"
-            style={{
-              opacity: 1,
-              transform: 'translateY(0)',
-            }}
-          >
-            <div className="container">
-              <div className="grid md:grid-cols-2 gap-8 items-center">
-                {frame.media_url && (
-                  <div className="order-1 md:order-1">
-                    {frame.media_type === 'video' ? (
-                      <VideoPlayer src={frame.media_url} className="rounded-2xl overflow-hidden" />
-                    ) : (
-                      <img
-                        src={frame.media_url}
-                        alt={`Frame ${index + 1}`}
-                        className="w-full rounded-2xl object-cover"
-                      />
-                    )}
-                  </div>
-                )}
-                
-                <div className={`order-2 ${!frame.media_url ? 'md:col-span-2' : 'md:order-2'}`}>
-                  <div className="prose prose-lg max-w-none">
-                    <p className="text-lg leading-relaxed whitespace-pre-wrap">
-                      {frame.narrative_content || ''}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
+          <StoryFrame key={frame.id} frame={frame} index={index} />
         ))}
 
         {frames.length === 0 && (
@@ -173,6 +143,9 @@ export default function StoryPreview() {
           </div>
         )}
       </main>
+
+      {/* Bottom fade gradient */}
+      <div className="fixed bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-40 pointer-events-none" />
     </div>
   );
 }
