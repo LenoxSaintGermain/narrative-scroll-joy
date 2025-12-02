@@ -22,6 +22,14 @@ serve(async (req) => {
       );
     }
 
+    // Validate duration is within API bounds (4-8 seconds)
+    if (duration < 4 || duration > 8) {
+      return new Response(
+        JSON.stringify({ error: 'Duration must be between 4 and 8 seconds' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY');
     if (!GEMINI_API_KEY) {
       throw new Error('GEMINI_API_KEY is not configured');

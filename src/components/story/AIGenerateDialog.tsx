@@ -112,7 +112,7 @@ export function AIGenerateDialog({
                 <input
                   id="duration"
                   type="range"
-                  min="5"
+                  min="4"
                   max="8"
                   step="1"
                   value={duration}
