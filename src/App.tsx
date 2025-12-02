@@ -9,6 +9,7 @@ import Auth from "./pages/Auth";
 import Stories from "./pages/Stories";
 import NewStory from "./pages/NewStory";
 import StoryDetail from "./pages/StoryDetail";
+import StoryPreview from "./pages/StoryPreview";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/stories" element={<Stories />} />
           <Route path="/stories/new" element={<NewStory />} />
           <Route path="/stories/:id" element={<StoryDetail />} />
+          <Route path="/story/:id" element={<StoryPreview />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
