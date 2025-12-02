@@ -111,24 +111,31 @@ serve(async (req) => {
 
     console.log('Video data structure:', Object.keys(videoData));
 
-    // Get base64 video data - handle different possible response structures
-    let videoBase64: string | undefined;
+    // Extract video URI from response
+    const videoUri = videoData.generateVideoResponse?.generatedSamples?.[0]?.video?.uri;
     
-    if (videoData.video?.videoData) {
-      videoBase64 = videoData.video.videoData;
-    } else if (videoData.predictions && videoData.predictions[0]?.videoData) {
-      videoBase64 = videoData.predictions[0].videoData;
-    } else if (videoData.videoData) {
-      videoBase64 = videoData.videoData;
-    }
-    
-    if (!videoBase64) {
-      console.error('Could not find video data in response:', JSON.stringify(videoData, null, 2));
-      throw new Error('No video data returned from generation');
+    if (!videoUri) {
+      console.error('Could not find video URI in response:', JSON.stringify(videoData, null, 2));
+      throw new Error('No video URI returned from generation');
     }
 
-    // Convert base64 to blob
-    const videoBuffer = Uint8Array.from(atob(videoBase64), c => c.charCodeAt(0));
+    console.log('Downloading video from URI:', videoUri);
+
+    // Download the video from the URI
+    const downloadResponse = await fetch(videoUri, {
+      headers: {
+        'Authorization': `Bearer ${GEMINI_API_KEY}`,
+      },
+    });
+
+    if (!downloadResponse.ok) {
+      const errorText = await downloadResponse.text();
+      console.error('Video download error:', downloadResponse.status, errorText);
+      throw new Error(`Failed to download video: ${errorText}`);
+    }
+
+    // Get video as buffer
+    const videoBuffer = new Uint8Array(await downloadResponse.arrayBuffer());
     
     // Upload to Supabase Storage
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
