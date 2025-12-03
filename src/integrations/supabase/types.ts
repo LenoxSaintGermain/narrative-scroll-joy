@@ -1160,32 +1160,44 @@ export type Database = {
         Row: {
           ai_prompt_history: Json | null
           beat_id: string | null
+          beat_title: string | null
           chapter_id: string
           created_at: string | null
+          duration: number | null
           id: string
+          media_type: string | null
           narrative_content: string | null
           order_index: number
           updated_at: string | null
+          visual_prompt: string | null
         }
         Insert: {
           ai_prompt_history?: Json | null
           beat_id?: string | null
+          beat_title?: string | null
           chapter_id: string
           created_at?: string | null
+          duration?: number | null
           id?: string
+          media_type?: string | null
           narrative_content?: string | null
           order_index?: number
           updated_at?: string | null
+          visual_prompt?: string | null
         }
         Update: {
           ai_prompt_history?: Json | null
           beat_id?: string | null
+          beat_title?: string | null
           chapter_id?: string
           created_at?: string | null
+          duration?: number | null
           id?: string
+          media_type?: string | null
           narrative_content?: string | null
           order_index?: number
           updated_at?: string | null
+          visual_prompt?: string | null
         }
         Relationships: [
           {
@@ -1235,6 +1247,50 @@ export type Database = {
             columns: ["framework_id"]
             isOneToOne: false
             referencedRelation: "story_frameworks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      generation_logs: {
+        Row: {
+          created_at: string | null
+          error_message: string | null
+          id: string
+          model_used: string | null
+          narrative_id: string | null
+          operation_type: string
+          prompt_preview: string | null
+          tokens_used: number | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          error_message?: string | null
+          id?: string
+          model_used?: string | null
+          narrative_id?: string | null
+          operation_type: string
+          prompt_preview?: string | null
+          tokens_used?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          error_message?: string | null
+          id?: string
+          model_used?: string | null
+          narrative_id?: string | null
+          operation_type?: string
+          prompt_preview?: string | null
+          tokens_used?: number | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "generation_logs_narrative_id_fkey"
+            columns: ["narrative_id"]
+            isOneToOne: false
+            referencedRelation: "narratives"
             referencedColumns: ["id"]
           },
         ]
@@ -1777,45 +1833,60 @@ export type Database = {
           created_at: string | null
           description: string | null
           framework_id: string | null
+          generated_by: string | null
+          generation_metadata: Json | null
+          generation_prompt: string | null
           genre: string | null
           id: string
           is_public: boolean | null
           status: Database["public"]["Enums"]["story_status"] | null
+          target_audience: string | null
           thumbnail_url: string | null
           title: string
           updated_at: string | null
           user_id: string
           view_count: number | null
+          visual_style: string | null
         }
         Insert: {
           ai_cover_prompt?: string | null
           created_at?: string | null
           description?: string | null
           framework_id?: string | null
+          generated_by?: string | null
+          generation_metadata?: Json | null
+          generation_prompt?: string | null
           genre?: string | null
           id?: string
           is_public?: boolean | null
           status?: Database["public"]["Enums"]["story_status"] | null
+          target_audience?: string | null
           thumbnail_url?: string | null
           title: string
           updated_at?: string | null
           user_id: string
           view_count?: number | null
+          visual_style?: string | null
         }
         Update: {
           ai_cover_prompt?: string | null
           created_at?: string | null
           description?: string | null
           framework_id?: string | null
+          generated_by?: string | null
+          generation_metadata?: Json | null
+          generation_prompt?: string | null
           genre?: string | null
           id?: string
           is_public?: boolean | null
           status?: Database["public"]["Enums"]["story_status"] | null
+          target_audience?: string | null
           thumbnail_url?: string | null
           title?: string
           updated_at?: string | null
           user_id?: string
           view_count?: number | null
+          visual_style?: string | null
         }
         Relationships: [
           {

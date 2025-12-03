@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Plus, LogOut, Book } from "lucide-react";
+import { Plus, LogOut, Book, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Stories() {
@@ -87,10 +87,16 @@ export default function Stories() {
               Create and manage your narrative journeys
             </p>
           </div>
-          <Button onClick={handleNewStory} size="lg">
-            <Plus className="h-5 w-5 mr-2" />
-            New Story
-          </Button>
+          <div className="flex gap-3">
+            <Button onClick={() => navigate("/stories/generate")} size="lg" variant="outline" className="gap-2">
+              <Sparkles className="h-5 w-5" />
+              AI Generate
+            </Button>
+            <Button onClick={handleNewStory} size="lg">
+              <Plus className="h-5 w-5 mr-2" />
+              New Story
+            </Button>
+          </div>
         </div>
 
         {narratives.length === 0 ? (
