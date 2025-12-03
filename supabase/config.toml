@@ -14,3 +14,9 @@ verify_jwt = true
 
 [functions.generate-story-cover]
 verify_jwt = true
+
+[functions.generate-story]
+verify_jwt = true
+
+[functions.regenerate-beat]
+verify_jwt = true

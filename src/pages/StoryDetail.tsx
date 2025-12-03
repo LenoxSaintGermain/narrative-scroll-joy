@@ -34,6 +34,10 @@ interface Frame {
   order_index: number;
   narrative_content: string | null;
   beat_id: string | null;
+  beat_title?: string | null;
+  visual_prompt?: string | null;
+  media_type?: string | null;
+  duration?: number | null;
 }
 
 export default function StoryDetail() {

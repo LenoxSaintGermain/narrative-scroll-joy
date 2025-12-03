@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import Stories from "./pages/Stories";
 import NewStory from "./pages/NewStory";
+import GenerateStory from "./pages/GenerateStory";
 import StoryDetail from "./pages/StoryDetail";
 import StoryPreview from "./pages/StoryPreview";
 
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/stories" element={<Stories />} />
           <Route path="/stories/new" element={<NewStory />} />
+          <Route path="/stories/generate" element={<GenerateStory />} />
           <Route path="/stories/:id" element={<StoryDetail />} />
           <Route path="/story/:id" element={<StoryPreview />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
