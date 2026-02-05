@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Film, BookOpen } from "lucide-react";
 import { StoryShelf } from "@/components/feed/StoryShelf";
-
+import heroImage from "@/assets/hero-narrative-studio.jpg";
 interface PublicStory {
   id: string;
   title: string;
@@ -57,15 +57,18 @@ const Index = () => {
   return (
     <main className="min-h-screen bg-background">
       {/* Hero Section - Cinematic */}
-      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
-        {/* Animated background */}
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+        {/* Hero background image */}
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-background to-background" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
-          
-          {/* Film strip decoration */}
-          <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-r from-transparent via-primary/5 to-transparent" />
-          <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-r from-transparent via-primary/5 to-transparent" />
+          <img 
+            src={heroImage} 
+            alt="Narrative Studio - AI-powered storytelling" 
+            className="absolute inset-0 w-full h-full object-cover object-center"
+          />
+          {/* Overlay gradients for text legibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+          <div className="absolute inset-0 bg-background/20" />
         </div>
 
         <div className="container relative z-10 text-center px-4">
