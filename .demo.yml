@@ -1,0 +1,12 @@
+# Demo Catalog metadata — parsed by sync agent
+title: Narrative Studio
+pitch: AI-powered scrollytelling platform that generates stories with images and videos from simple prompts
+status: live
+category: media
+platform: lovable
+featured: false
+demo_video:
+cover_prompt: >
+  A cinematic vertical timeline interface with floating story frames, 
+  glowing AI-generated imagery transitioning between scenes, 
+  and elegant typography on a dark editorial background
