@@ -224,6 +224,89 @@ export type Database = {
           },
         ]
       }
+      bespoke_page_sections: {
+        Row: {
+          body_copy: string | null
+          created_at: string
+          cta_primary: string | null
+          cta_secondary: string | null
+          headline: string | null
+          id: string
+          media_type: string | null
+          media_url: string | null
+          order_index: number
+          page_id: string
+          section_key: string
+          subheadline: string | null
+          tagline: string | null
+          updated_at: string
+        }
+        Insert: {
+          body_copy?: string | null
+          created_at?: string
+          cta_primary?: string | null
+          cta_secondary?: string | null
+          headline?: string | null
+          id?: string
+          media_type?: string | null
+          media_url?: string | null
+          order_index?: number
+          page_id: string
+          section_key: string
+          subheadline?: string | null
+          tagline?: string | null
+          updated_at?: string
+        }
+        Update: {
+          body_copy?: string | null
+          created_at?: string
+          cta_primary?: string | null
+          cta_secondary?: string | null
+          headline?: string | null
+          id?: string
+          media_type?: string | null
+          media_url?: string | null
+          order_index?: number
+          page_id?: string
+          section_key?: string
+          subheadline?: string | null
+          tagline?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bespoke_page_sections_page_id_fkey"
+            columns: ["page_id"]
+            isOneToOne: false
+            referencedRelation: "bespoke_pages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bespoke_pages: {
+        Row: {
+          created_at: string
+          id: string
+          slug: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          slug: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          slug?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       business_metrics: {
         Row: {
           created_at: string | null
@@ -265,35 +348,99 @@ export type Database = {
           },
         ]
       }
+      campaign_posts: {
+        Row: {
+          asset_url: string | null
+          campaign_id: string | null
+          content: string | null
+          created_at: string
+          id: string
+          platform: string
+          status: string | null
+          updated_at: string
+          utm_code: string | null
+        }
+        Insert: {
+          asset_url?: string | null
+          campaign_id?: string | null
+          content?: string | null
+          created_at?: string
+          id?: string
+          platform: string
+          status?: string | null
+          updated_at?: string
+          utm_code?: string | null
+        }
+        Update: {
+          asset_url?: string | null
+          campaign_id?: string | null
+          content?: string | null
+          created_at?: string
+          id?: string
+          platform?: string
+          status?: string | null
+          updated_at?: string
+          utm_code?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaign_posts_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "marketing_campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       campground_job_queue: {
         Row: {
           created_at: string | null
+          created_by: string | null
           error: string | null
           id: string
-          payload: Json
+          job_type: Database["public"]["Enums"]["job_type"]
+          payload: Json | null
           processed_at: string | null
-          status: string
-          type: string
+          prospect_id: string | null
+          result: Json | null
+          status: Database["public"]["Enums"]["job_status"]
+          updated_at: string | null
         }
         Insert: {
           created_at?: string | null
+          created_by?: string | null
           error?: string | null
           id?: string
-          payload: Json
+          job_type: Database["public"]["Enums"]["job_type"]
+          payload?: Json | null
           processed_at?: string | null
-          status?: string
-          type: string
+          prospect_id?: string | null
+          result?: Json | null
+          status?: Database["public"]["Enums"]["job_status"]
+          updated_at?: string | null
         }
         Update: {
           created_at?: string | null
+          created_by?: string | null
           error?: string | null
           id?: string
-          payload?: Json
+          job_type?: Database["public"]["Enums"]["job_type"]
+          payload?: Json | null
           processed_at?: string | null
-          status?: string
-          type?: string
+          prospect_id?: string | null
+          result?: Json | null
+          status?: Database["public"]["Enums"]["job_status"]
+          updated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "campground_job_queue_prospect_id_fkey"
+            columns: ["prospect_id"]
+            isOneToOne: false
+            referencedRelation: "campground_prospects"
+            referencedColumns: ["prospect_id"]
+          },
+        ]
       }
       campground_prospects: {
         Row: {
@@ -324,6 +471,7 @@ export type Database = {
           projection_data: Json
           prospect_id: string
           selected_case_study_id: string | null
+          session_id: string | null
           source: string | null
           stage: string
           status: string | null
@@ -360,6 +508,7 @@ export type Database = {
           projection_data: Json
           prospect_id?: string
           selected_case_study_id?: string | null
+          session_id?: string | null
           source?: string | null
           stage?: string
           status?: string | null
@@ -396,6 +545,7 @@ export type Database = {
           projection_data?: Json
           prospect_id?: string
           selected_case_study_id?: string | null
+          session_id?: string | null
           source?: string | null
           stage?: string
           status?: string | null
@@ -969,6 +1119,72 @@ export type Database = {
           id?: string
           is_favorite?: boolean | null
           profile_id?: string
+        }
+        Relationships: []
+      }
+      demo_catalog: {
+        Row: {
+          category: string | null
+          cover_image_url: string | null
+          cover_prompt: string | null
+          created_at: string
+          demo_video_url: string | null
+          description: string | null
+          featured: boolean
+          github_repo: string | null
+          id: string
+          live_url: string | null
+          pitch: string | null
+          platform: string | null
+          profile_id: string
+          repo_url: string | null
+          sort_order: number
+          status: string
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          cover_image_url?: string | null
+          cover_prompt?: string | null
+          created_at?: string
+          demo_video_url?: string | null
+          description?: string | null
+          featured?: boolean
+          github_repo?: string | null
+          id?: string
+          live_url?: string | null
+          pitch?: string | null
+          platform?: string | null
+          profile_id?: string
+          repo_url?: string | null
+          sort_order?: number
+          status?: string
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          cover_image_url?: string | null
+          cover_prompt?: string | null
+          created_at?: string
+          demo_video_url?: string | null
+          description?: string | null
+          featured?: boolean
+          github_repo?: string | null
+          id?: string
+          live_url?: string | null
+          pitch?: string | null
+          platform?: string | null
+          profile_id?: string
+          repo_url?: string | null
+          sort_order?: number
+          status?: string
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -1561,6 +1777,62 @@ export type Database = {
         }
         Relationships: []
       }
+      investment_opportunities: {
+        Row: {
+          analysis_scores: Json | null
+          category: string | null
+          cover_image_url: string | null
+          created_at: string
+          id: string
+          investment_dossier: Json | null
+          source_case_study_id: string | null
+          source_inbox_id: string | null
+          status: string | null
+          summary: string | null
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          analysis_scores?: Json | null
+          category?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          id?: string
+          investment_dossier?: Json | null
+          source_case_study_id?: string | null
+          source_inbox_id?: string | null
+          status?: string | null
+          summary?: string | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          analysis_scores?: Json | null
+          category?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          id?: string
+          investment_dossier?: Json | null
+          source_case_study_id?: string | null
+          source_inbox_id?: string | null
+          status?: string | null
+          summary?: string | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "investment_opportunities_source_case_study_id_fkey"
+            columns: ["source_case_study_id"]
+            isOneToOne: false
+            referencedRelation: "case_studies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       landing_case_studies: {
         Row: {
           category: string
@@ -1732,6 +2004,41 @@ export type Database = {
         }
         Relationships: []
       }
+      marketing_campaigns: {
+        Row: {
+          case_study_id: string | null
+          created_at: string
+          id: string
+          name: string
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          case_study_id?: string | null
+          created_at?: string
+          id?: string
+          name: string
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          case_study_id?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+          status?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "marketing_campaigns_case_study_id_fkey"
+            columns: ["case_study_id"]
+            isOneToOne: false
+            referencedRelation: "case_studies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       media_assets: {
         Row: {
           created_at: string | null
@@ -1898,6 +2205,134 @@ export type Database = {
           },
         ]
       }
+      notebook_cells: {
+        Row: {
+          authorship: Database["public"]["Enums"]["authorship_type"] | null
+          confidence: number | null
+          confidence_level:
+            | Database["public"]["Enums"]["confidence_level_type"]
+            | null
+          content: string | null
+          created_at: string
+          embedding: string | null
+          id: string
+          intent_tags: string[] | null
+          metadata: Json
+          narrative_role:
+            | Database["public"]["Enums"]["narrative_role_type"]
+            | null
+          order_index: number | null
+          parent_id: string | null
+          relationships: Json | null
+          rendered_content: string | null
+          role: Database["public"]["Enums"]["cell_role"] | null
+          tags: string[] | null
+          type: Database["public"]["Enums"]["cell_type"]
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          authorship?: Database["public"]["Enums"]["authorship_type"] | null
+          confidence?: number | null
+          confidence_level?:
+            | Database["public"]["Enums"]["confidence_level_type"]
+            | null
+          content?: string | null
+          created_at?: string
+          embedding?: string | null
+          id?: string
+          intent_tags?: string[] | null
+          metadata?: Json
+          narrative_role?:
+            | Database["public"]["Enums"]["narrative_role_type"]
+            | null
+          order_index?: number | null
+          parent_id?: string | null
+          relationships?: Json | null
+          rendered_content?: string | null
+          role?: Database["public"]["Enums"]["cell_role"] | null
+          tags?: string[] | null
+          type?: Database["public"]["Enums"]["cell_type"]
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          authorship?: Database["public"]["Enums"]["authorship_type"] | null
+          confidence?: number | null
+          confidence_level?:
+            | Database["public"]["Enums"]["confidence_level_type"]
+            | null
+          content?: string | null
+          created_at?: string
+          embedding?: string | null
+          id?: string
+          intent_tags?: string[] | null
+          metadata?: Json
+          narrative_role?:
+            | Database["public"]["Enums"]["narrative_role_type"]
+            | null
+          order_index?: number | null
+          parent_id?: string | null
+          relationships?: Json | null
+          rendered_content?: string | null
+          role?: Database["public"]["Enums"]["cell_role"] | null
+          tags?: string[] | null
+          type?: Database["public"]["Enums"]["cell_type"]
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notebook_cells_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "notebook_cells"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notebook_links: {
+        Row: {
+          created_at: string
+          id: string
+          metadata: Json
+          source_id: string
+          target_id: string
+          type: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          metadata?: Json
+          source_id: string
+          target_id: string
+          type?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          metadata?: Json
+          source_id?: string
+          target_id?: string
+          type?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notebook_links_source_id_fkey"
+            columns: ["source_id"]
+            isOneToOne: false
+            referencedRelation: "notebook_cells"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notebook_links_target_id_fkey"
+            columns: ["target_id"]
+            isOneToOne: false
+            referencedRelation: "notebook_cells"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       pattern_library: {
         Row: {
           avg_ebitda_impact: number | null
@@ -1939,6 +2374,111 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: []
+      }
+      portfolio_analyses: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          id: string
+          is_active: boolean | null
+          last_analyzed_at: string | null
+          name: string
+          return_max: number | null
+          return_min: number | null
+          risk_tilt: string | null
+          synergy_multiplier: number | null
+          timeline_years: number | null
+          total_committed: number
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_analyzed_at?: string | null
+          name: string
+          return_max?: number | null
+          return_min?: number | null
+          risk_tilt?: string | null
+          synergy_multiplier?: number | null
+          timeline_years?: number | null
+          total_committed?: number
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_analyzed_at?: string | null
+          name?: string
+          return_max?: number | null
+          return_min?: number | null
+          risk_tilt?: string | null
+          synergy_multiplier?: number | null
+          timeline_years?: number | null
+          total_committed?: number
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      portfolio_line_items: {
+        Row: {
+          amount: number
+          case_study_id: string
+          created_at: string | null
+          equity_percent: number | null
+          id: string
+          instrument: string | null
+          investment_thesis: string | null
+          portfolio_id: string
+          updated_at: string | null
+          valuation_cap: number | null
+        }
+        Insert: {
+          amount: number
+          case_study_id: string
+          created_at?: string | null
+          equity_percent?: number | null
+          id?: string
+          instrument?: string | null
+          investment_thesis?: string | null
+          portfolio_id: string
+          updated_at?: string | null
+          valuation_cap?: number | null
+        }
+        Update: {
+          amount?: number
+          case_study_id?: string
+          created_at?: string | null
+          equity_percent?: number | null
+          id?: string
+          instrument?: string | null
+          investment_thesis?: string | null
+          portfolio_id?: string
+          updated_at?: string | null
+          valuation_cap?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_line_items_case_study_id_fkey"
+            columns: ["case_study_id"]
+            isOneToOne: false
+            referencedRelation: "case_studies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "portfolio_line_items_portfolio_id_fkey"
+            columns: ["portfolio_id"]
+            isOneToOne: false
+            referencedRelation: "portfolio_analyses"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       portfolio_projects: {
         Row: {
@@ -1996,6 +2536,35 @@ export type Database = {
           year?: string | null
         }
         Relationships: []
+      }
+      portfolio_snapshots: {
+        Row: {
+          created_at: string | null
+          id: string
+          portfolio_id: string
+          snapshot_data: Json
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          portfolio_id: string
+          snapshot_data: Json
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          portfolio_id?: string
+          snapshot_data?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_snapshots_portfolio_id_fkey"
+            columns: ["portfolio_id"]
+            isOneToOne: false
+            referencedRelation: "portfolio_analyses"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
@@ -2153,6 +2722,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      publications: {
+        Row: {
+          author: Json
+          blocks: Json
+          created_at: string
+          id: string
+          published_at: string | null
+          slug: string
+          title: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          author?: Json
+          blocks?: Json
+          created_at?: string
+          id?: string
+          published_at?: string | null
+          slug: string
+          title: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          author?: Json
+          blocks?: Json
+          created_at?: string
+          id?: string
+          published_at?: string | null
+          slug?: string
+          title?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       skills: {
         Row: {
@@ -2362,9 +2967,86 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      investment_opportunities_investor_ready: {
+        Row: {
+          analysis_scores: Json | null
+          audiences: Json | null
+          category: string | null
+          cover_image_url: string | null
+          created_at: string | null
+          features: Json | null
+          id: string | null
+          investment_dossier: Json | null
+          prd: Json | null
+          problem: string | null
+          social_posts_data: Json | null
+          solution: string | null
+          source_case_study_id: string | null
+          source_inbox_id: string | null
+          status: string | null
+          summary: string | null
+          tags: string[] | null
+          title: string | null
+          updated_at: string | null
+          visual_concepts: Json | null
+        }
+        Relationships: []
+      }
+      investment_opportunities_unified: {
+        Row: {
+          analysis_scores: Json | null
+          audiences: Json | null
+          category: string | null
+          cover_image_url: string | null
+          created_at: string | null
+          features: Json | null
+          id: string | null
+          investment_dossier: Json | null
+          prd: Json | null
+          problem: string | null
+          social_posts_data: Json | null
+          solution: string | null
+          source_case_study_id: string | null
+          source_inbox_id: string | null
+          status: string | null
+          summary: string | null
+          tags: string[] | null
+          title: string | null
+          updated_at: string | null
+          visual_concepts: Json | null
+        }
+        Relationships: []
+      }
+      my_campaign_assets: {
+        Row: {
+          created_at: string | null
+          last_accessed_at: string | null
+          metadata: Json | null
+          name: string | null
+          path: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          last_accessed_at?: string | null
+          metadata?: Json | null
+          name?: string | null
+          path?: never
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          last_accessed_at?: string | null
+          metadata?: Json | null
+          name?: string | null
+          path?: never
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      campaigns_user_prefix: { Args: never; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -2372,11 +3054,38 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_uuid_array: { Args: { arr: Json }; Returns: boolean }
     }
     Enums: {
       app_role: "admin" | "creator" | "viewer"
+      authorship_type: "human" | "system" | "hybrid"
+      cell_role:
+        | "note"
+        | "problem"
+        | "insight"
+        | "solution"
+        | "system"
+        | "component"
+      cell_type:
+        | "text"
+        | "image"
+        | "sketch"
+        | "diagram"
+        | "code"
+        | "link"
+        | "pdf"
+      confidence_level_type: "draft" | "exploratory" | "validated" | "archived"
       generation_status: "pending" | "processing" | "completed" | "failed"
+      job_status: "pending" | "processing" | "completed" | "failed"
+      job_type: "intake_dossier" | "prospect_prep"
       media_type: "image" | "video" | "audio"
+      narrative_role_type:
+        | "problem"
+        | "insight"
+        | "solution"
+        | "context"
+        | "question"
+        | "evidence"
       story_status: "draft" | "published" | "archived"
     }
     CompositeTypes: {
@@ -2506,8 +3215,29 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "creator", "viewer"],
+      authorship_type: ["human", "system", "hybrid"],
+      cell_role: [
+        "note",
+        "problem",
+        "insight",
+        "solution",
+        "system",
+        "component",
+      ],
+      cell_type: ["text", "image", "sketch", "diagram", "code", "link", "pdf"],
+      confidence_level_type: ["draft", "exploratory", "validated", "archived"],
       generation_status: ["pending", "processing", "completed", "failed"],
+      job_status: ["pending", "processing", "completed", "failed"],
+      job_type: ["intake_dossier", "prospect_prep"],
       media_type: ["image", "video", "audio"],
+      narrative_role_type: [
+        "problem",
+        "insight",
+        "solution",
+        "context",
+        "question",
+        "evidence",
+      ],
       story_status: ["draft", "published", "archived"],
     },
   },
