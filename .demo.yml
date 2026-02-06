@@ -3,7 +3,7 @@ title: Narrative Studio
 pitch: AI-powered scrollytelling platform that generates stories with images and videos from simple prompts
 category: media
 platform: lovable
-featured: false
+featured: true
 live_url: https://narrative-scroll-joy.lovable.app
 cover_prompt: A cinematic vertical timeline interface with floating story frames, glowing AI-generated imagery transitioning between scenes, and elegant typography on a dark editorial background
 tags:
