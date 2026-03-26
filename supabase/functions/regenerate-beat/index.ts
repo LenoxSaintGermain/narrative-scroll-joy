@@ -116,7 +116,7 @@ Use 16:9 aspect ratio. Output plain text only.`;
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
+        model: 'google/gemini-3-flash-preview',
         messages: [
           { role: 'system', content: 'You are a professional cinematographer. Output plain text prompts only.' },
           { role: 'user', content: prompt }
