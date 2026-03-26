@@ -158,7 +158,7 @@ Use 16:9 aspect ratio. Output plain text only.`;
       user_id: user.id,
       narrative_id: narrative.id,
       operation_type: 'regenerate_beat',
-      model_used: 'google/gemini-2.5-flash',
+      model_used: 'google/gemini-3-flash-preview',
       prompt_preview: (modifications?.narrative || frame.narrative_content || '').substring(0, 200)
     });
 

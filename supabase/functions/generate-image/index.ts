@@ -120,7 +120,7 @@ serve(async (req) => {
       JSON.stringify({ 
         url: publicUrl,
         prompt: enhancedPrompt,
-        model: 'google/gemini-2.5-flash-image-preview'
+        model: 'google/gemini-3.1-flash-image-preview'
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

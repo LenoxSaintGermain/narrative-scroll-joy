@@ -226,7 +226,7 @@ serve(async (req) => {
     await supabase.from('generation_logs').insert({
       user_id: user.id,
       operation_type: 'visual_prompts',
-      model_used: 'google/gemini-2.5-flash',
+      model_used: 'google/gemini-3-flash-preview',
       prompt_preview: `${storyStructure.beats.length} beats generated`
     });
 
