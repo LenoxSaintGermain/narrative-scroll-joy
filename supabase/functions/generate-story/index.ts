@@ -305,6 +305,15 @@ Return ONLY a JSON array of strings — one refined prompt per beat. Maintain th
           framework,
           story_length: storyLength,
           beat_count: storyStructure.beats.length,
+          pipeline: 'notebooklm-inspired',
+          models: {
+            structure: 'google/gemini-3-flash-preview',
+            visual_prompts: 'google/gemini-3-flash-preview',
+            consistency_review: 'google/gemini-3-flash-preview',
+            image_generation: 'google/gemini-3.1-flash-image-preview',
+            cover_generation: 'google/gemini-3-pro-image-preview',
+            video_generation: 'veo-3.1-generate-preview'
+          },
           generated_at: new Date().toISOString()
         }
       })
