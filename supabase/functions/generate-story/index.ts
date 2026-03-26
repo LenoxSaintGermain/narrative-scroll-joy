@@ -230,8 +230,64 @@ serve(async (req) => {
       prompt_preview: `${storyStructure.beats.length} beats generated`
     });
 
-    // Step 3: Create narrative, chapter, and frames in database
-    console.log('Step 3: Saving to database...');
+    // Step 3: Consistency review pass (Creative Director pattern from NotebookLM)
+    console.log('Step 3: Running visual consistency review...');
+    
+    const consistencyPrompt = `You are a visual consistency director reviewing a sequence of ${visualPrompts.length} visual prompts for a story called "${storyStructure.story_title}".
+Visual Style: ${visualStyle || 'Cinematic, high quality'}
+
+Review these prompts and fix any inconsistencies in:
+1. Character appearances (clothing, hair, features must stay consistent)
+2. Color palette and lighting style across beats
+3. Art style and rendering technique
+4. Environment continuity (time of day, weather, locations)
+5. Camera language consistency
+
+Here are the current prompts:
+${visualPrompts.map((p: string, i: number) => `--- BEAT ${i + 1}: ${storyStructure.beats[i].title} ---\n${p}`).join('\n\n')}
+
+Return ONLY a JSON array of strings — one refined prompt per beat. Maintain the detail level but ensure visual coherence across the entire sequence. No markdown, no explanation.`;
+
+    try {
+      const consistencyResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${LOVABLE_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'google/gemini-3-flash-preview',
+          messages: [
+            { role: 'system', content: 'You are a visual consistency director. Return ONLY a valid JSON array of strings.' },
+            { role: 'user', content: consistencyPrompt }
+          ],
+          temperature: 0.4,
+        }),
+      });
+
+      if (consistencyResponse.ok) {
+        const consistencyData = await consistencyResponse.json();
+        const content = consistencyData.choices[0].message.content;
+        const jsonMatch = content.match(/```(?:json)?\s*([\s\S]*?)```/) || [null, content];
+        const refinedPrompts = JSON.parse(jsonMatch[1].trim());
+        
+        if (Array.isArray(refinedPrompts) && refinedPrompts.length === visualPrompts.length) {
+          for (let i = 0; i < refinedPrompts.length; i++) {
+            visualPrompts[i] = refinedPrompts[i];
+          }
+          console.log('Visual consistency review applied successfully');
+        } else {
+          console.warn('Consistency review returned unexpected format, keeping originals');
+        }
+      } else {
+        console.warn('Consistency review failed, keeping original prompts');
+      }
+    } catch (e) {
+      console.warn('Consistency review error, keeping original prompts:', e);
+    }
+
+    // Step 4: Create narrative, chapter, and frames in database
+    console.log('Step 4: Saving to database...');
     
     // Create narrative
     const { data: narrative, error: narrativeError } = await supabase
