@@ -137,7 +137,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'google/gemini-2.5-flash',
+        model: 'google/gemini-3-flash-preview',
         messages: [
           { role: 'system', content: 'You are a master storyteller. Return ONLY valid JSON, no markdown.' },
           { role: 'user', content: structurePrompt }
@@ -169,7 +169,7 @@ serve(async (req) => {
     await supabase.from('generation_logs').insert({
       user_id: user.id,
       operation_type: 'story_structure',
-      model_used: 'google/gemini-2.5-flash',
+      model_used: 'google/gemini-3-flash-preview',
       prompt_preview: theme.substring(0, 200)
     });
 
@@ -203,7 +203,7 @@ serve(async (req) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'google/gemini-2.5-flash',
+          model: 'google/gemini-3-flash-preview',
           messages: [
             { role: 'system', content: 'You are a professional cinematographer. Output plain text prompts only, no markdown or JSON.' },
             { role: 'user', content: visualPrompt }
@@ -226,7 +226,7 @@ serve(async (req) => {
     await supabase.from('generation_logs').insert({
       user_id: user.id,
       operation_type: 'visual_prompts',
-      model_used: 'google/gemini-2.5-flash',
+      model_used: 'google/gemini-3-flash-preview',
       prompt_preview: `${storyStructure.beats.length} beats generated`
     });
 

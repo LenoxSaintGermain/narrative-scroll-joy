@@ -91,6 +91,130 @@ export type Database = {
           },
         ]
       }
+      agent_registry: {
+        Row: {
+          confidence: number
+          created_at: string
+          first_task: string
+          id: string
+          last_task_queued_at: string | null
+          metadata: Json
+          mission: string
+          name: string
+          rationale: string | null
+          source_cell_id: string | null
+          status: Database["public"]["Enums"]["agent_registry_status"]
+          suggested_skill: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          confidence?: number
+          created_at?: string
+          first_task: string
+          id?: string
+          last_task_queued_at?: string | null
+          metadata?: Json
+          mission: string
+          name: string
+          rationale?: string | null
+          source_cell_id?: string | null
+          status?: Database["public"]["Enums"]["agent_registry_status"]
+          suggested_skill?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          confidence?: number
+          created_at?: string
+          first_task?: string
+          id?: string
+          last_task_queued_at?: string | null
+          metadata?: Json
+          mission?: string
+          name?: string
+          rationale?: string | null
+          source_cell_id?: string | null
+          status?: Database["public"]["Enums"]["agent_registry_status"]
+          suggested_skill?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_registry_source_cell_id_fkey"
+            columns: ["source_cell_id"]
+            isOneToOne: false
+            referencedRelation: "notebook_cells"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      agent_registry_schedules: {
+        Row: {
+          agent_id: string
+          cadence: Database["public"]["Enums"]["agent_cadence"]
+          created_at: string
+          id: string
+          last_run_at: string | null
+          metadata: Json
+          next_run_at: string | null
+          prompt_template: string | null
+          run_day_of_month: number | null
+          run_day_of_week: number | null
+          run_hour_local: number
+          run_minute_local: number
+          status: Database["public"]["Enums"]["agent_schedule_status"]
+          timezone: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          agent_id: string
+          cadence: Database["public"]["Enums"]["agent_cadence"]
+          created_at?: string
+          id?: string
+          last_run_at?: string | null
+          metadata?: Json
+          next_run_at?: string | null
+          prompt_template?: string | null
+          run_day_of_month?: number | null
+          run_day_of_week?: number | null
+          run_hour_local?: number
+          run_minute_local?: number
+          status?: Database["public"]["Enums"]["agent_schedule_status"]
+          timezone?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          agent_id?: string
+          cadence?: Database["public"]["Enums"]["agent_cadence"]
+          created_at?: string
+          id?: string
+          last_run_at?: string | null
+          metadata?: Json
+          next_run_at?: string | null
+          prompt_template?: string | null
+          run_day_of_month?: number | null
+          run_day_of_week?: number | null
+          run_hour_local?: number
+          run_minute_local?: number
+          status?: Database["public"]["Enums"]["agent_schedule_status"]
+          timezone?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_registry_schedules_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: true
+            referencedRelation: "agent_registry"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       ai_conversations: {
         Row: {
           action_items: Json | null
@@ -982,6 +1106,224 @@ export type Database = {
           },
         ]
       }
+      conductor_config: {
+        Row: {
+          created_at: string
+          default_quality_gate: number
+          heartbeat_interval_minutes: number
+          id: string
+          is_active: boolean
+          max_tasks_per_cycle: number
+          pricing_flash_input_per_m: number
+          pricing_flash_output_per_m: number
+          pricing_pro_input_per_m: number
+          pricing_pro_output_per_m: number
+          settings: Json
+          token_budget_per_cycle_usd: number
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          default_quality_gate?: number
+          heartbeat_interval_minutes?: number
+          id?: string
+          is_active?: boolean
+          max_tasks_per_cycle?: number
+          pricing_flash_input_per_m?: number
+          pricing_flash_output_per_m?: number
+          pricing_pro_input_per_m?: number
+          pricing_pro_output_per_m?: number
+          settings?: Json
+          token_budget_per_cycle_usd?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          default_quality_gate?: number
+          heartbeat_interval_minutes?: number
+          id?: string
+          is_active?: boolean
+          max_tasks_per_cycle?: number
+          pricing_flash_input_per_m?: number
+          pricing_flash_output_per_m?: number
+          pricing_pro_input_per_m?: number
+          pricing_pro_output_per_m?: number
+          settings?: Json
+          token_budget_per_cycle_usd?: number
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      conductor_memory: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          last_recalled_at: string | null
+          metadata: Json | null
+          quality_score: number | null
+          recall_count: number
+          source_task_id: string | null
+          tags: string[]
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          last_recalled_at?: string | null
+          metadata?: Json | null
+          quality_score?: number | null
+          recall_count?: number
+          source_task_id?: string | null
+          tags?: string[]
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          last_recalled_at?: string | null
+          metadata?: Json | null
+          quality_score?: number | null
+          recall_count?: number
+          source_task_id?: string | null
+          tags?: string[]
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "conductor_memory_source_task_id_fkey"
+            columns: ["source_task_id"]
+            isOneToOne: false
+            referencedRelation: "conductor_tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      conductor_notifications: {
+        Row: {
+          action_url: string | null
+          body: string
+          created_at: string
+          id: string
+          metadata: Json | null
+          read_at: string | null
+          title: string
+          type: Database["public"]["Enums"]["conductor_notification_type"]
+          user_id: string | null
+        }
+        Insert: {
+          action_url?: string | null
+          body: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          read_at?: string | null
+          title: string
+          type: Database["public"]["Enums"]["conductor_notification_type"]
+          user_id?: string | null
+        }
+        Update: {
+          action_url?: string | null
+          body?: string
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          read_at?: string | null
+          title?: string
+          type?: Database["public"]["Enums"]["conductor_notification_type"]
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      conductor_tasks: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          depends_on: string[]
+          duration_ms: number | null
+          error_message: string | null
+          id: string
+          input_payload: Json
+          input_tokens: number | null
+          max_retries: number
+          metadata: Json | null
+          output_payload: Json | null
+          output_tokens: number | null
+          quality_notes: string | null
+          quality_score: number | null
+          retry_count: number
+          source_ref: string | null
+          source_type: string | null
+          started_at: string | null
+          status: Database["public"]["Enums"]["conductor_task_status"]
+          task_type: string
+          token_cost_usd: number | null
+          tool_name: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          depends_on?: string[]
+          duration_ms?: number | null
+          error_message?: string | null
+          id?: string
+          input_payload?: Json
+          input_tokens?: number | null
+          max_retries?: number
+          metadata?: Json | null
+          output_payload?: Json | null
+          output_tokens?: number | null
+          quality_notes?: string | null
+          quality_score?: number | null
+          retry_count?: number
+          source_ref?: string | null
+          source_type?: string | null
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["conductor_task_status"]
+          task_type: string
+          token_cost_usd?: number | null
+          tool_name: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          depends_on?: string[]
+          duration_ms?: number | null
+          error_message?: string | null
+          id?: string
+          input_payload?: Json
+          input_tokens?: number | null
+          max_retries?: number
+          metadata?: Json | null
+          output_payload?: Json | null
+          output_tokens?: number | null
+          quality_notes?: string | null
+          quality_score?: number | null
+          retry_count?: number
+          source_ref?: string | null
+          source_type?: string | null
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["conductor_task_status"]
+          task_type?: string
+          token_cost_usd?: number | null
+          tool_name?: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       content_suggestions: {
         Row: {
           applied_at: string | null
@@ -1187,6 +1529,76 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      demo_inquiries: {
+        Row: {
+          created_at: string | null
+          demo_id: string
+          email: string
+          id: string
+          message: string | null
+          name: string
+          session_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          demo_id: string
+          email: string
+          id?: string
+          message?: string | null
+          name: string
+          session_id: string
+        }
+        Update: {
+          created_at?: string | null
+          demo_id?: string
+          email?: string
+          id?: string
+          message?: string | null
+          name?: string
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "demo_inquiries_demo_id_fkey"
+            columns: ["demo_id"]
+            isOneToOne: false
+            referencedRelation: "demo_catalog"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      demo_reactions: {
+        Row: {
+          created_at: string | null
+          demo_id: string
+          id: string
+          reaction: string
+          session_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          demo_id: string
+          id?: string
+          reaction: string
+          session_id: string
+        }
+        Update: {
+          created_at?: string | null
+          demo_id?: string
+          id?: string
+          reaction?: string
+          session_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "demo_reactions_demo_id_fkey"
+            columns: ["demo_id"]
+            isOneToOne: false
+            referencedRelation: "demo_catalog"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       ebitda_calculator_submissions: {
         Row: {
@@ -1785,6 +2197,7 @@ export type Database = {
           created_at: string
           id: string
           investment_dossier: Json | null
+          is_featured: boolean
           source_case_study_id: string | null
           source_inbox_id: string | null
           status: string | null
@@ -1800,6 +2213,7 @@ export type Database = {
           created_at?: string
           id?: string
           investment_dossier?: Json | null
+          is_featured?: boolean
           source_case_study_id?: string | null
           source_inbox_id?: string | null
           status?: string | null
@@ -1815,6 +2229,7 @@ export type Database = {
           created_at?: string
           id?: string
           investment_dossier?: Json | null
+          is_featured?: boolean
           source_case_study_id?: string | null
           source_inbox_id?: string | null
           status?: string | null
@@ -2001,6 +2416,51 @@ export type Database = {
           subheadline?: string | null
           tagline?: string | null
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      librarian_artifacts: {
+        Row: {
+          checksum: string
+          created_at: string
+          id: string
+          metadata: Json
+          raw_content: string
+          source_path: string
+          source_type: Database["public"]["Enums"]["librarian_artifact_source_type"]
+          structured_summary: Json
+          tags: string[]
+          title: string
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          checksum: string
+          created_at?: string
+          id?: string
+          metadata?: Json
+          raw_content: string
+          source_path: string
+          source_type?: Database["public"]["Enums"]["librarian_artifact_source_type"]
+          structured_summary?: Json
+          tags?: string[]
+          title: string
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          checksum?: string
+          created_at?: string
+          id?: string
+          metadata?: Json
+          raw_content?: string
+          source_path?: string
+          source_type?: Database["public"]["Enums"]["librarian_artifact_source_type"]
+          structured_summary?: Json
+          tags?: string[]
+          title?: string
+          updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -2967,6 +3427,71 @@ export type Database = {
       }
     }
     Views: {
+      agent_registry_due_schedules: {
+        Row: {
+          agent_id: string | null
+          cadence: Database["public"]["Enums"]["agent_cadence"] | null
+          created_at: string | null
+          id: string | null
+          last_run_at: string | null
+          metadata: Json | null
+          next_run_at: string | null
+          prompt_template: string | null
+          run_day_of_month: number | null
+          run_day_of_week: number | null
+          run_hour_local: number | null
+          run_minute_local: number | null
+          status: Database["public"]["Enums"]["agent_schedule_status"] | null
+          timezone: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          agent_id?: string | null
+          cadence?: Database["public"]["Enums"]["agent_cadence"] | null
+          created_at?: string | null
+          id?: string | null
+          last_run_at?: string | null
+          metadata?: Json | null
+          next_run_at?: string | null
+          prompt_template?: string | null
+          run_day_of_month?: number | null
+          run_day_of_week?: number | null
+          run_hour_local?: number | null
+          run_minute_local?: number | null
+          status?: Database["public"]["Enums"]["agent_schedule_status"] | null
+          timezone?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          agent_id?: string | null
+          cadence?: Database["public"]["Enums"]["agent_cadence"] | null
+          created_at?: string | null
+          id?: string | null
+          last_run_at?: string | null
+          metadata?: Json | null
+          next_run_at?: string | null
+          prompt_template?: string | null
+          run_day_of_month?: number | null
+          run_day_of_week?: number | null
+          run_hour_local?: number | null
+          run_minute_local?: number | null
+          status?: Database["public"]["Enums"]["agent_schedule_status"] | null
+          timezone?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "agent_registry_schedules_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: true
+            referencedRelation: "agent_registry"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       investment_opportunities_investor_ready: {
         Row: {
           analysis_scores: Json | null
@@ -2977,6 +3502,7 @@ export type Database = {
           features: Json | null
           id: string | null
           investment_dossier: Json | null
+          is_featured: boolean | null
           prd: Json | null
           problem: string | null
           social_posts_data: Json | null
@@ -3002,6 +3528,7 @@ export type Database = {
           features: Json | null
           id: string | null
           investment_dossier: Json | null
+          is_featured: boolean | null
           prd: Json | null
           problem: string | null
           social_posts_data: Json | null
@@ -3057,6 +3584,9 @@ export type Database = {
       is_uuid_array: { Args: { arr: Json }; Returns: boolean }
     }
     Enums: {
+      agent_cadence: "weekly" | "monthly"
+      agent_registry_status: "candidate" | "active" | "paused" | "archived"
+      agent_schedule_status: "active" | "paused"
       app_role: "admin" | "creator" | "viewer"
       authorship_type: "human" | "system" | "hybrid"
       cell_role:
@@ -3074,10 +3604,34 @@ export type Database = {
         | "code"
         | "link"
         | "pdf"
+      conductor_notification_type:
+        | "weekly_digest"
+        | "budget_alert"
+        | "needs_review_alert"
+        | "task_failed"
+        | "task_completed_high_value"
+        | "system"
+      conductor_task_status:
+        | "created"
+        | "queued"
+        | "waiting"
+        | "running"
+        | "quality_check"
+        | "completed"
+        | "needs_review"
+        | "failed"
+        | "archived"
       confidence_level_type: "draft" | "exploratory" | "validated" | "archived"
       generation_status: "pending" | "processing" | "completed" | "failed"
       job_status: "pending" | "processing" | "completed" | "failed"
       job_type: "intake_dossier" | "prospect_prep"
+      librarian_artifact_source_type:
+        | "markdown"
+        | "readme"
+        | "audit"
+        | "changelog"
+        | "log"
+        | "other"
       media_type: "image" | "video" | "audio"
       narrative_role_type:
         | "problem"
@@ -3214,6 +3768,9 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      agent_cadence: ["weekly", "monthly"],
+      agent_registry_status: ["candidate", "active", "paused", "archived"],
+      agent_schedule_status: ["active", "paused"],
       app_role: ["admin", "creator", "viewer"],
       authorship_type: ["human", "system", "hybrid"],
       cell_role: [
@@ -3225,10 +3782,37 @@ export const Constants = {
         "component",
       ],
       cell_type: ["text", "image", "sketch", "diagram", "code", "link", "pdf"],
+      conductor_notification_type: [
+        "weekly_digest",
+        "budget_alert",
+        "needs_review_alert",
+        "task_failed",
+        "task_completed_high_value",
+        "system",
+      ],
+      conductor_task_status: [
+        "created",
+        "queued",
+        "waiting",
+        "running",
+        "quality_check",
+        "completed",
+        "needs_review",
+        "failed",
+        "archived",
+      ],
       confidence_level_type: ["draft", "exploratory", "validated", "archived"],
       generation_status: ["pending", "processing", "completed", "failed"],
       job_status: ["pending", "processing", "completed", "failed"],
       job_type: ["intake_dossier", "prospect_prep"],
+      librarian_artifact_source_type: [
+        "markdown",
+        "readme",
+        "audit",
+        "changelog",
+        "log",
+        "other",
+      ],
       media_type: ["image", "video", "audio"],
       narrative_role_type: [
         "problem",
